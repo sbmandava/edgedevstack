@@ -8,4 +8,4 @@ Stack Environment
   - ingress
   - dns + letsencrypt certs
   - container registry  
-- VSCode Extensions
+- VSCode Workspace + Kuberentes Extensions

@@ -17,6 +17,7 @@ apt-get -y autoremove
 install_vscode () {
 cd /tmp
 snap install code --classic
+snap install microk8s --classic
 snap install helm
 snap install kubectl --classic
 snap install kontena-lens --classic

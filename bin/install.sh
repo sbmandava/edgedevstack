@@ -17,12 +17,12 @@ apt-get -y autoremove
 install_vscode () {
 cd /tmp
 snap install code --classic
-snap install helm3 
+snap install helm
 snap install kubectl --classic
 snap install kontena-lens --classic
 su - ubuntu -c "code --install-extension nocalhost.nocalhost"
-wget -O /usr/local/bin/nhctl https://github.com/nocalhost/nocalhost/releases/download/v0.6.15/nhctl-linux-amd64
-chmod +x /usr/local/bin/nhctl
+# wget -O /usr/local/bin/nhctl https://github.com/nocalhost/nocalhost/releases/download/v0.6.15/nhctl-linux-amd64
+# chmod +x /usr/local/bin/nhctl
 echo "fs.inotify.max_user_watches=204800" | sudo tee -a /etc/sysctl.conf
 }
 
@@ -33,4 +33,5 @@ if [ `whoami` != root ]; then
 fi
 
 install_desktop
+install_vscode
 

@@ -18,6 +18,10 @@ install_vscode () {
 cd /tmp
 snap install code --classic
 snap install microk8s --classic
+mkdir /home/ubuntu/.kube
+microk8s config > /home/ubuntu/.kube/config
+chmod 600 /home/ubuntu/.kube/config
+chown -R ubuntu:ubuntu /home/ubuntu/.kube
 snap install helm
 snap install kubectl --classic
 snap install kontena-lens --classic

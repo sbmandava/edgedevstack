@@ -10,18 +10,18 @@ update_env
 # apt-get install -y lubuntu-desktop xrdp
 # apt-get remove -y --purge libreoffice* transmission* vlc* 2048* skanlite* bluedevil* trojita* qpdfview* pulseaudio* ark* byobu* feather* kcalc*
 # apt-get remove -y --purge qlipper* compton* noblenote* *speech* *gphoto2* *modem* lximage* usb-creator* qps* *fcitx*
-echo "installing desktop..."
-apt-get install -y -qq ubuntu-budgie-desktop xrdp firefox
+echo ".....installing desktop..."
+DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ubuntu-budgie-desktop xrdp firefox
 apt-get clean
 apt-get -y -qq autoremove
 rdm=`date +%s | sha256sum | base64 | head -c 5 ; echo`
 echo "ubuntu:passw0rd$rdm" | chpasswd
-echo "remote desktop login:ubuntu password:passw0rd$rdm"
+echo "..................................remote desktop login:ubuntu password:passw0rd$rdm"
 }
 
 install_k8s () {
 cd /tmp
-echo "installing microk8s..."
+echo ".....installing microk8s..."
 snap install microk8s --classic
 microk8s enable storage
 microk8s enable registry
@@ -41,7 +41,7 @@ snap install kontena-lens --classic
 }
 
 install_vscode () {
-echo "installing vscode..."
+echo ".....installing vscode..."
 snap install code --classic
 su - ubuntu -c "code --install-extension nocalhost.nocalhost"
 # wget -O /usr/local/bin/nhctl https://github.com/nocalhost/nocalhost/releases/download/v0.6.15/nhctl-linux-amd64

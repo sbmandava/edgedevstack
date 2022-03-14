@@ -21,6 +21,8 @@ snap install microk8s --classic
 mkdir /home/ubuntu/.kube
 microk8s config > /home/ubuntu/.kube/config
 chmod 600 /home/ubuntu/.kube/config
+usermod -a -G microk8s ubuntu
+newgrp microk8s
 chown -R ubuntu:ubuntu /home/ubuntu/.kube
 snap install helm
 snap install kubectl --classic

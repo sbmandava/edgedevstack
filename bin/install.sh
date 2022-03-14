@@ -14,14 +14,14 @@ apt-get clean
 apt-get -y autoremove
 }
 
-install_vscode () {
+install_k8s () {
 cd /tmp
-snap install code --classic
 snap install microk8s --classic
 microk8s enable storage
 microk8s enable registry
 microk8s enable metrics-server
 microk8s enable prometheus
+microk8s enable ingress metallb:192.168.55.10-192.168.55.30
 mkdir /home/ubuntu/.kube
 microk8s config > /home/ubuntu/.kube/config
 chmod 600 /home/ubuntu/.kube/config
@@ -31,10 +31,20 @@ chown -R ubuntu:ubuntu /home/ubuntu/.kube
 snap install helm
 snap install kubectl --classic
 snap install kontena-lens --classic
+}
+
+install_vscode () {
+snap install code --classic
 su - ubuntu -c "code --install-extension nocalhost.nocalhost"
 # wget -O /usr/local/bin/nhctl https://github.com/nocalhost/nocalhost/releases/download/v0.6.15/nhctl-linux-amd64
 # chmod +x /usr/local/bin/nhctl
 echo "fs.inotify.max_user_watches=204800" | sudo tee -a /etc/sysctl.conf
+}
+
+install_drupal () {
+ su - ubuntu -c "helm repo add bitnami https://charts.bitnami.com/bitnami"
+ su - ubuntu -c "helm repo update"
+ su - ubuntu -c "helm install bitnami/drupal --generate-name"
 }
 
 #### main
@@ -44,5 +54,7 @@ if [ `whoami` != root ]; then
 fi
 
 install_desktop
+install_k8s
 install_vscode
+# install_drupal
 

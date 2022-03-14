@@ -11,7 +11,8 @@ update_env
 # apt-get remove -y --purge libreoffice* transmission* vlc* 2048* skanlite* bluedevil* trojita* qpdfview* pulseaudio* ark* byobu* feather* kcalc*
 # apt-get remove -y --purge qlipper* compton* noblenote* *speech* *gphoto2* *modem* lximage* usb-creator* qps* *fcitx*
 echo ".....installing desktop..."
-DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ubuntu-budgie-desktop xrdp firefox
+# DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ubuntu-budgie-desktop xrdp firefox
+DEBIAN_FRONTEND=noninteractive apt-get install -y -qq xubuntu-core^ xrdp firefox
 apt-get clean
 apt-get -y -qq autoremove
 rdm=`date +%s | sha256sum | base64 | head -c 5 ; echo`

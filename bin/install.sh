@@ -18,6 +18,10 @@ install_vscode () {
 cd /tmp
 snap install code --classic
 snap install microk8s --classic
+microk8s enable storage
+microk8s enable registry
+microk8s enable metrics-server
+microk8s enable prometheus
 mkdir /home/ubuntu/.kube
 microk8s config > /home/ubuntu/.kube/config
 chmod 600 /home/ubuntu/.kube/config

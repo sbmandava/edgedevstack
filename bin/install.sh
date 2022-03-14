@@ -57,6 +57,11 @@ echo "installing drupal..."
  su - ubuntu -c "helm install bitnami/drupal --generate-name"
 }
 
+closing () {
+echo "..installation done"
+echo "...remote desktop login:ubuntu password:passw0rd$rdm"
+}
+
 #### main
 if [ `whoami` != root ]; then
   echo Please run this script with sudo
@@ -66,5 +71,6 @@ fi
 install_desktop
 install_k8s
 install_vscode
+closing
 # install_drupal
 

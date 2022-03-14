@@ -1,6 +1,6 @@
 update_env () {
 # update binaries
-echo "apt repo update..."
+echo ".....apt repo update..."
 apt-get -y -qq update
 apt-get -y -qq upgrade
 }
@@ -17,7 +17,7 @@ apt-get clean
 apt-get -y -qq autoremove
 rdm=`date +%s | sha256sum | base64 | head -c 5 ; echo`
 echo "ubuntu:passw0rd$rdm" | chpasswd
-echo "..................................remote desktop login:ubuntu password:passw0rd$rdm"
+echo "..remote desktop login:ubuntu password:passw0rd$rdm"
 }
 
 install_k8s () {
@@ -38,7 +38,9 @@ usermod -a -G microk8s ubuntu
 chown -R ubuntu:ubuntu /home/ubuntu/.kube
 snap install helm --classic
 snap install kubectl --classic
-snap install kontena-lens --classic
+# snap install kontena-lens --classic
+wget -O /tmp/lens5.snap  https://api.k8slens.dev/binaries/Lens-5.4.1-latest.20220304.1.amd64.snap
+snap install /tmp/lens5.snap --dangerous --classic
 }
 
 install_vscode () {
@@ -59,6 +61,7 @@ echo "installing drupal..."
 
 closing () {
 echo "..installation done"
+echo "remote desktop ip : `ip a |grep 192 |cut -d/ -f1|awk {'print $2'}`
 echo "...remote desktop login:ubuntu password:passw0rd$rdm"
 }
 

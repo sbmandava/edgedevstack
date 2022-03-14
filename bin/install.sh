@@ -61,7 +61,7 @@ echo "installing drupal..."
 
 closing () {
 echo "..installation done"
-echo "remote desktop ip : `ip a |grep 192 |cut -d/ -f1|awk {'print $2'}`
+echo "remote desktop ip : `ip a |grep 192 |cut -d/ -f1|awk {'print $2'}`"
 echo "...remote desktop login:ubuntu password:passw0rd$rdm"
 }
 

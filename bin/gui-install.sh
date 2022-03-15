@@ -6,15 +6,15 @@ apt-get -y -qq upgrade
 }
 
 install_desktop () {
-update_env 	
 # apt-get install -y lubuntu-desktop xrdp
 # apt-get remove -y --purge libreoffice* transmission* vlc* 2048* skanlite* bluedevil* trojita* qpdfview* pulseaudio* ark* byobu* feather* kcalc*
 # apt-get remove -y --purge qlipper* compton* noblenote* *speech* *gphoto2* *modem* lximage* usb-creator* qps* *fcitx*
 echo ".....installing desktop..."
 # DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ubuntu-budgie-desktop xrdp firefox
 DEBIAN_FRONTEND=noninteractive apt-get install -y -qq xubuntu-core^ xrdp firefox
-apt-get clean
-apt-get -y -qq autoremove
+wget -O /tmp/lens5.snap  https://api.k8slens.dev/binaries/Lens-5.4.1-latest.20220304.1.amd64.snap
+snap install /tmp/lens5.snap --dangerous --classic
+# snap install kontena-lens --classic
 rdm=`date +%s | sha256sum | base64 | head -c 5 ; echo`
 echo "ubuntu:passw0rd$rdm" | chpasswd
 echo "..remote desktop login:ubuntu password:passw0rd$rdm"
@@ -38,9 +38,6 @@ usermod -a -G microk8s ubuntu
 chown -R ubuntu:ubuntu /home/ubuntu/.kube
 snap install helm --classic
 snap install kubectl --classic
-# snap install kontena-lens --classic
-wget -O /tmp/lens5.snap  https://api.k8slens.dev/binaries/Lens-5.4.1-latest.20220304.1.amd64.snap
-snap install /tmp/lens5.snap --dangerous --classic
 }
 
 install_vscode () {
@@ -61,8 +58,11 @@ echo "installing drupal..."
 
 closing () {
 echo "..installation done"
+apt-get -y autoremove --purge && sudo apt-get -y autoclean && apt-get -y clean && sudo rm -rf /var/lib/apt/lists/*
+rdm=`date +%s | sha256sum | base64 | head -c 5 ; echo`
+echo "ubuntu:passw0rd$rdm" | chpasswd
+echo "..remote desktop login:ubuntu password:passw0rd$rdm"
 echo "remote desktop ip : `ip a |grep 192 |cut -d/ -f1|awk {'print $2'}`"
-echo "...remote desktop login:ubuntu password:passw0rd$rdm"
 }
 
 #### main
@@ -71,9 +71,9 @@ if [ `whoami` != root ]; then
   exit
 fi
 
-install_desktop
+update_env
 install_k8s
-install_vscode
 closing
-# install_drupal
-
+install_desktop  # installs desktop this code has been commented for cli
+install_vscode # installs desktop this code has been commented for cli 
+# install_drupal # will be determined later

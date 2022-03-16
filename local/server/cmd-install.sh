@@ -65,15 +65,33 @@ echo "..remote desktop login:ubuntu password:passw0rd$rdm"
 echo "remote desktop ip : `ip a |grep 192 |cut -d/ -f1|awk {'print $2'}`"
 }
 
+help () {
+echo "  -k to install k8s"
+echo "  -g to install desktop xfce4 gui"
+echo "  -v to install vscode. requires gui"
+echo "  -d to install drupal cms"
+}
+
 #### main
 if [ `whoami` != root ]; then
   echo Please run this script with sudo
   exit
 fi
 
+if [ $# -eq 0 ]; then
+    echo "No arguments provided. -h to get help"
+    exit 1
+fi
+
 update_env
-install_k8s
+while getopts k:d:v: flag
+do
+    case "${flag}" in
+        k) install_k8s;;
+        g) install_gui;;
+        v) install_vscode;;
+        d) install_drupal;;
+        h) help;;
+    esac
+done
 closing
-install_desktop  # installs desktop this code has been commented for cli
-install_vscode # installs desktop this code has been commented for cli 
-# install_drupal # will be determined later

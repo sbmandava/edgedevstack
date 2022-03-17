@@ -15,9 +15,6 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y -qq xubuntu-core^ xrdp firefox
 wget -O /tmp/lens5.snap  https://api.k8slens.dev/binaries/Lens-5.4.1-latest.20220304.1.amd64.snap
 snap install /tmp/lens5.snap --dangerous --classic
 # snap install kontena-lens --classic
-rdm=`date +%s | sha256sum | base64 | head -c 5 ; echo`
-echo "ubuntu:passw0rd$rdm" | chpasswd
-echo "..remote desktop login:ubuntu password:passw0rd$rdm"
 }
 
 install_k8s () {
@@ -60,8 +57,8 @@ closing () {
 echo "..installation done"
 apt-get -y autoremove --purge && sudo apt-get -y autoclean && apt-get -y clean && sudo rm -rf /var/lib/apt/lists/*
 rdm=`date +%s | sha256sum | base64 | head -c 5 ; echo`
-echo "ubuntu:passw0rd$rdm" | chpasswd
-echo "..remote desktop login:ubuntu password:passw0rd$rdm"
+# echo "ubuntu:passw0rd$rdm" | chpasswd
+# echo "..remote desktop login:ubuntu password:passw0rd$rdm"
 echo "remote desktop ip : `ip a |grep 192 |cut -d/ -f1|awk {'print $2'}`"
 }
 
@@ -84,14 +81,12 @@ if [ $# -eq 0 ]; then
 fi
 
 update_env
-while getopts k:d:v: flag
-do
-    case "${flag}" in
-        k) install_k8s;;
-        g) install_gui;;
-        v) install_vscode;;
-        d) install_drupal;;
-        h) help;;
-    esac
-done
+case "$1" in
+    -k) install_k8s;;
+    -g) install_gui;;
+    -v) install_vscode;;
+    -d) install_drupal;;
+    -h) help;;
+     *) echo "invalid option. use -h";;
+esac
 closing

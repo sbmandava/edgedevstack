@@ -1,0 +1,14 @@
+deb https://mirrors.lug.mtu.edu/ubuntu/ focal main restricted universe multiverse
+deb-src https://mirrors.lug.mtu.edu/ubuntu/ focal main restricted universe multiverse
+
+deb https://mirrors.lug.mtu.edu/ubuntu/ focal-updates main restricted universe multiverse
+deb-src https://mirrors.lug.mtu.edu/ubuntu/ focal-updates main restricted universe multiverse
+
+deb https://mirrors.lug.mtu.edu/ubuntu/ focal-security main restricted universe multiverse
+deb-src https://mirrors.lug.mtu.edu/ubuntu/ focal-security main restricted universe multiverse
+
+deb https://mirrors.lug.mtu.edu/ubuntu/ focal-backports main restricted universe multiverse
+deb-src https://mirrors.lug.mtu.edu/ubuntu/ focal-backports main restricted universe multiverse
+
+deb https://archive.canonical.com/ubuntu focal partner
+deb-src https://archive.canonical.com/ubuntu focal partner

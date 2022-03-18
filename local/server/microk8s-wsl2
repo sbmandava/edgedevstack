@@ -1,0 +1,36 @@
+apt install -yqq fontconfig daemonize
+
+cat > /etc/wsl.conf  << EOL
+[automount]
+enabled = true
+options = "metadata,uid=1000,gid=1000,umask=22,fmask=11,case=off"
+mountFsTab = true
+crossDistro = true
+
+[network]
+generateHosts = false
+generateResolvConf = true
+
+[interop]
+enabled = true
+appendWindowsPath = true
+
+[user]
+default = ubuntu
+EOL 
+
+cat > /etc/profile.d/00-wsl2-systemd.sh << EOL
+SYSTEMD_PID=$(ps -ef | grep '/lib/systemd/systemd --system-unit=basic.target$' | grep -v unshare | awk '{print $2}')
+
+if [ -z "$SYSTEMD_PID" ]; then
+   sudo /usr/bin/daemonize /usr/bin/unshare --fork --pid --mount-proc /lib/systemd/systemd --system-unit=basic.target
+   SYSTEMD_PID=$(ps -ef | grep '/lib/systemd/systemd --system-unit=basic.target$' | grep -v unshare | awk '{print $2}')
+fi
+
+if [ -n "$SYSTEMD_PID" ] && [ "$SYSTEMD_PID" != "1" ]; then
+    exec sudo /usr/bin/nsenter -t $SYSTEMD_PID -a su - $LOGNAME
+fi
+EOL
+
+echo 'net.ipv4.conf.all.route_localnet = 1' | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p /etc/sysctl.conf

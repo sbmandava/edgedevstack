@@ -1,6 +1,7 @@
 update_env () {
 # update binaries
 echo ".....apt repo update..."
+cp sources.list /etc/apt/
 apt-get -y -qq update
 apt-get -y -qq upgrade
 }

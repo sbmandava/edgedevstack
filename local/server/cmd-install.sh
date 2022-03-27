@@ -38,6 +38,14 @@ snap install helm --classic
 snap install kubectl --classic
 }
 
+install_podman () {
+  source /etc/os-release
+  echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/ /" | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+  curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/Release.key | sudo apt-key add -
+  apt-get update
+  apt-get install podman
+}  
+
 install_vscode () {
 echo ".....installing vscode..."
 snap install code --classic
@@ -65,6 +73,7 @@ echo "remote desktop ip : `ip a |grep 192 |cut -d/ -f1|awk {'print $2'}`"
 
 help () {
 echo "  -k to install k8s"
+echo "  -p to install podman (docker)"
 echo "  -g to install desktop xfce4 gui"
 echo "  -v to install vscode. requires gui"
 echo "  -d to install drupal cms"
@@ -84,6 +93,7 @@ fi
 update_env
 case "$1" in
     -k) install_k8s;;
+    -p) install_podman;;
     -g) install_gui;;
     -v) install_vscode;;
     -d) install_drupal;;
